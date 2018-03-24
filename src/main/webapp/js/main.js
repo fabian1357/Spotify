@@ -23,7 +23,12 @@ $(document).ready(() => {
                 console.log('url:' + urlDetailsThis);
 
                 $.getJSON(urlDetailsThis, (responseDetail) => {
-                    alert(responseDetail.title + ':\n' + responseDetail.info);
+                    swal ({
+                              title: "Weitere Infos:",
+                              text: (responseDetail.title + ':\n' + responseDetail.info),
+                          })
+
+
                 })
             });
 
@@ -45,7 +50,11 @@ $(document).ready(() => {
             	        + '</td></tr>';
             }).join());
         }).fail((e) => {
-            alert('An error occured')
+            swal({
+                 title: "Sorry!",
+                 text: "An error occured",
+                 type: "error"
+            })
             console.log(e);
         }).always(() => {
             $('.progress').addClass('hide');

@@ -18,6 +18,6 @@ $(document).ready(() => {
                 	+ '</td></tr>';
             }).join());
         }).fail(() => {
-            alert("error");
+            swal ("error");
         });
     });
