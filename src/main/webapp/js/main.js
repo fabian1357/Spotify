@@ -1,5 +1,6 @@
 $(document).ready(() => {
     $('#searchSubmit').on('click', () => {
+        document.getElementById('section').style.visibility = 'visible';
         const urlSearch = 'http://localhost:8080/service/search';
         const urlDetails = 'http://localhost:8080/service/detail/';
 
@@ -16,19 +17,34 @@ $(document).ready(() => {
 
         $.getJSON(urlSearchThis, (response) => {
             $('#resultList').on('click', '#infoButton', event=> {
-
                 var spotifyId = $(event.currentTarget).data('spotifyid');
                 var typeId = $(event.currentTarget).data('typeid');
                 var urlDetailsThis = urlDetails + spotifyId + '?type=' + typeId;
                 console.log('url:' + urlDetailsThis);
 
                 $.getJSON(urlDetailsThis, (responseDetail) => {
-                    swal ({
-                              title: "Weitere Infos:",
-                              text: (responseDetail.title + ':\n' + responseDetail.info),
-                          })
+                    var track = "track";
+                    var album = "album";
+                    var artist = "artist";
 
-
+                    if (track == responseDetail.info) {
+                        swal ({
+                            title: "Weitere Infos zum Lied:",
+                            text: ("Der Name des Liedes lautet: " + responseDetail.title),
+                        })
+                    } else {
+                        if (responseDetail.info === artist) {
+                            swal ({
+                                title: "Weitere Infos zum Sänger:",
+                                text: ("Der Name des Sängers lautet: " + responseDetail.title),
+                            })
+                        } else {
+                            swal ({
+                                title: "Weitere Infos zum Album:",
+                                text: ("Der Name des Albums lautet: " + responseDetail.title),
+                            })
+                        }
+                    }
                 })
             });
 
@@ -39,6 +55,7 @@ $(document).ready(() => {
             //append row for each item in response array
             $('#resultList').append(
                 $.map(response.results, (item) => {
+                    document.getElementById('table').style.visibility = 'visible';
             	    return '<tr>'
             	        + '<td>'
                 	    + item.title
@@ -51,8 +68,8 @@ $(document).ready(() => {
             }).join());
         }).fail((e) => {
             swal({
-                 title: "Sorry!",
-                 text: "An error occured",
+                 title: "An error occured!",
+                 text: "Bitte gib einen Suchbegriff ein!",
                  type: "error"
             })
             console.log(e);
