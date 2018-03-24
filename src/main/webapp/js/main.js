@@ -1,7 +1,7 @@
 $(document).ready(() => {
     $('#searchSubmit').on('click', () => {
-        const urlSearch = 'http://localhost:8080/search';
-        const urlDetails = 'http://localhost:8080/detail/';
+        const urlSearch = 'http://localhost:8080/service/search';
+        const urlDetails = 'http://localhost:8080/service/detail/';
 
         var searchTerm = $('#searchTerm').val();
         var searchType = $('#searchType').val();
